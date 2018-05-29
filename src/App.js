@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import Timer from './Countdown';
 import LanguageSwitcher from './LanguageSwitcher';
-import LangContext, { registerLang } from './util/i18n'
+import LangContext, { registerLang } from './util/i18n';
+import DateTimePicker from 'react-datetime-picker';
 
 import { translations as availableLanguages } from './util/i18n/config';
 
@@ -13,30 +12,30 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lang: 'en'
+      lang: 'en',
+      datetime: new Date('September 22 2018 12:30')
     }
   }
 
   switchLang = (lang) => this.setState({ lang })
 
+  handleDateTimeChange = (datetime) => this.setState({ datetime })
+
   render() {
+    const { lang, datetime } = this.state;
     return (
-      <LangContext.Provider value={this.state.lang}>
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <LangContext.Provider value={lang}>
 
-        <Timer dateReference={new Date("September 22 2018 12:30")} />
-
+        <Timer dateReference={datetime} />
 
         <LanguageSwitcher
           languages={Object.keys(availableLanguages)}
-          value={this.state.lang}
+          value={lang}
           onChange={this.switchLang} />
+
+        <DateTimePicker
+          value={datetime}
+          onChange={this.handleDateTimeChange} />
 
       </LangContext.Provider>
     );

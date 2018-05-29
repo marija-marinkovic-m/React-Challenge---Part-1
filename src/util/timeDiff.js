@@ -3,6 +3,7 @@ const hourMs = minuteMs*60;
 const dayMs = hourMs*24;
 
 const timeDiffResultTemplate = {
+  tense: '',
   seconds: 0,
   hours: 0,
   days: 0,
@@ -13,10 +14,12 @@ const timeDiffResultTemplate = {
 function getTimeDiff(timestamp1, timestamp2) {
   const t1 = new Date(timestamp1).getTime();
   const t2 = new Date(timestamp2).getTime();
-  
+
   if (isNaN(t1) || isNaN(t2)) return null;
   
-  const result = Object.assign({}, timeDiffResultTemplate);
+  const result = Object.assign({}, timeDiffResultTemplate, {
+    tense: timestamp1 >= timestamp2 ? 'past' : 'future'
+  });
   let diffMs = Math.abs(timestamp2 - timestamp1);
   
   // days
@@ -34,7 +37,13 @@ function getTimeDiff(timestamp1, timestamp2) {
   diffMs -= result.minutes*minuteMs;
   result.seconds = Math.floor(diffMs/1000);
   
-  return result;
+  // normalize (prepare translation keys)
+  return Object.keys(result)
+    .reduce((acc, key) => {
+      const val = result[key];
+      acc[val > 1 ? `${key}.pl` : key] = val;
+      return acc;
+    }, {});
 }
 
 export default getTimeDiff;

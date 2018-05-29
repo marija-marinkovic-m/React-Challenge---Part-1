@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getTimeDiff from '../util/timeDiff';
+import TimeUnit from './Unit';
+import LangContext, { translate } from '../util/i18n';
 
-class Timer extends React.Component {
+class Timer extends React.PureComponent {
   _interval;
 
   constructor(props) {
@@ -10,10 +12,6 @@ class Timer extends React.Component {
     this.state = {
       timeDiff: null
     }
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    return null;
   }
 
   componentDidMount() {
@@ -28,10 +26,25 @@ class Timer extends React.Component {
     this.setState({ timeDiff: getTimeDiff((new Date()), this.props.dateReference) });
   }
 
+  getUnitProps = () => {
+    const { timeDiff } = this.state;
+    if (!timeDiff) return [];
+    return Object.keys(timeDiff)
+      .filter(k => k !== 'tense')
+      .map(label => ({label: `date.${label}`, value: timeDiff[label]}));
+  }
+
   render() {
+    const { timeDiff } = this.state;
+    const units = this.getUnitProps();
+
     return <React.Fragment>
-      <h3>Starts In</h3>
-      <pre>{ JSON.stringify(this.state.timeDiff) }</pre>
+      <LangContext.Consumer>
+        {lang => timeDiff && <h3>{translate(lang, `date.${timeDiff.tense}`)}</h3>}
+      </LangContext.Consumer>
+
+      { units.map((props,i) => <TimeUnit key={i} {...props} />) }
+
     </React.Fragment>
   }
 }
