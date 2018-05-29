@@ -2,11 +2,26 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Timer from './Countdown';
+import LanguageSwitcher from './LanguageSwitcher';
+import LangContext, { registerLang } from './util/i18n'
+
+import { translations as availableLanguages } from './util/i18n/config';
+
+registerLang(availableLanguages);
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      lang: 'en'
+    }
+  }
+
+  switchLang = (lang) => this.setState({ lang })
+
   render() {
     return (
-      <div className="App">
+      <LangContext.Provider value={this.state.lang}>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
@@ -16,7 +31,14 @@ class App extends Component {
         </p>
 
         <Timer dateReference={new Date("September 22 2018 12:30")} />
-      </div>
+
+
+        <LanguageSwitcher
+          languages={Object.keys(availableLanguages)}
+          value={this.state.lang}
+          onChange={this.switchLang} />
+
+      </LangContext.Provider>
     );
   }
 }
