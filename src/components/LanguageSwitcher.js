@@ -1,20 +1,19 @@
 import React from 'react';
 import PropType from 'prop-types';
-import LangContext, { translate } from './util/i18n';
+import RadioInput from './RadioInput';
 
 const LanguageSwitcher = ({languages, onChange, value}) => {
   if (!languages.length) return null;
   
   return (<div>
-    <LangContext.Consumer>{lng => <h4>{translate(lng, 'switch.lang')}</h4>}</LangContext.Consumer>
-    {
-      languages.map(lang => (<div key={lang}>
-        <label>
-          { lang }<br />
-          <input type="radio" name="lang" value={lang} checked={lang === value} onChange={onChange.bind(null, lang)} />
-        </label>
-      </div>))
-    }
+    { languages.map(lang => <RadioInput
+      key={lang}
+      label={lang}
+      name="lang"
+      value={lang}
+      checked={lang === value}
+      onChange={onChange.bind(null, lang)}
+    />) }
   </div>);
 }
 

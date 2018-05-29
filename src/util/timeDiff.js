@@ -4,11 +4,12 @@ const dayMs = hourMs*24;
 
 const timeDiffResultTemplate = {
   tense: '',
-  seconds: 0,
-  hours: 0,
-  days: 0,
+  years: 0,
   months: 0,
-  years: 0
+  days: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0
 }
 
 function getTimeDiff(timestamp1, timestamp2) {
