@@ -54,8 +54,11 @@ function getTimeDiff(timestamp1, timestamp2, displayMonths = false, displayYears
 
   }
   
+  // days
+  const msDays = Math.floor(diffMs/dayMs);
+  
   // hours, minutes and seconds
-  diffMs -= result.days*dayMs;
+  diffMs -= msDays*dayMs;
   result.hours = Math.floor(diffMs/1000/60/60);
   diffMs -= result.hours*hourMs;
   result.minutes = Math.floor(diffMs/1000/60);
