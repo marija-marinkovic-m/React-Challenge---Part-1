@@ -47,10 +47,10 @@ function getTimeDiff(timestamp1, timestamp2, displayMonths = false, displayYears
     result.days = days;
 
     if (displayYears) {
-      result.months = months;
-      result.years = years;
+      result.months = Math.abs(months);
+      result.years = Math.abs(years);
     } else {
-      result.months = months + years * 12;
+      result.months = Math.abs(months + years * 12);
     }
 
   }
