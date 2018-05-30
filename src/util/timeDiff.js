@@ -24,9 +24,10 @@ function getTimeDiff(timestamp1, timestamp2, displayMonths = false, displayYears
     tense: timestamp1 >= timestamp2 ? 'past' : 'future'
   });
   let diffMs = Math.abs(timestamp2 - timestamp1);
+  const msDays = Math.floor(diffMs/dayMs);
 
   if (!displayMonths && !displayYears) {
-    result.days = Math.floor(diffMs/dayMs);
+    result.days = msDays;
   } else if(displayMonths) {
     let months = d2.getMonth() - d1.getMonth();
     let days = d2.getDate() - d1.getDate();
@@ -53,9 +54,6 @@ function getTimeDiff(timestamp1, timestamp2, displayMonths = false, displayYears
     }
 
   }
-  
-  // days
-  const msDays = Math.floor(diffMs/dayMs);
   
   // hours, minutes and seconds
   diffMs -= msDays*dayMs;
