@@ -32,6 +32,7 @@ const TimeUnit = ({ value, label, lang }) => {
   const shouldPad = label.includes('hours')
     || label.includes('minutes')
     || label.includes('seconds')
+    || label.includes('days')
     || label.includes('months');
   return (
     <Wrap>
