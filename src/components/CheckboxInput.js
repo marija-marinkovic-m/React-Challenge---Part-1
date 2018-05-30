@@ -17,6 +17,9 @@ const Label = styled.label`
     &:checked ~ span:after {
       display: block;
     }
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
   span {
     position: absolute;
@@ -45,10 +48,20 @@ const Label = styled.label`
       background-color: white;
     }
   }
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+    &:hover {
+      input ~ span {
+        background-color: rgba(255,255,255,0.6)
+      }
+    }
+  }
 `;
 
 const CheckboxInput = ({label, ...inputProps}) => (
-  <Label>
+  <Label className={inputProps.disabled ? 'disabled' : ''}>
     {label}
     <input type="checkbox" {...inputProps} />
     <span />

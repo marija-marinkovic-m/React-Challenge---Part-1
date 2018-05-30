@@ -12,9 +12,11 @@ const timeDiffResultTemplate = {
   seconds: 0
 }
 
-function getTimeDiff(timestamp1, timestamp2) {
-  const t1 = new Date(timestamp1).getTime();
-  const t2 = new Date(timestamp2).getTime();
+function getTimeDiff(timestamp1, timestamp2, displayMonths = false, displayYears = false) {
+  const d1 = new Date(timestamp1);
+  const d2 = new Date(timestamp2);
+  const t1 = d1.getTime();
+  const t2 = d2.getTime();
 
   if (isNaN(t1) || isNaN(t2)) return null;
   
@@ -22,13 +24,35 @@ function getTimeDiff(timestamp1, timestamp2) {
     tense: timestamp1 >= timestamp2 ? 'past' : 'future'
   });
   let diffMs = Math.abs(timestamp2 - timestamp1);
-  
-  // days
-  result.days = Math.floor(diffMs/dayMs);
-  
-  // years and months
-  result.months = Math.floor(result.days/31);
-  result.years = Math.floor(result.months/12);
+
+  if (!displayMonths && !displayYears) {
+    result.days = Math.floor(diffMs/dayMs);
+  } else if(displayMonths) {
+    let months = d2.getMonth() - d1.getMonth();
+    let days = d2.getDate() - d1.getDate();
+    let years = d2.getFullYear() - d1.getFullYear();
+
+    if (days < 0) {
+      const dtmp = new Date(d1.getFullYear(), d1.getMonth() + 1, 1, 0, 0, -1);
+      months -= 1;
+      days += dtmp.getDate();
+    }
+
+    if (months < 0) {
+      months += 12;
+      years -= 1;
+    }
+
+    result.days = days;
+
+    if (displayYears) {
+      result.months = months;
+      result.years = years;
+    } else {
+      result.months = months + years * 12;
+    }
+
+  }
   
   // hours, minutes and seconds
   diffMs -= result.days*dayMs;

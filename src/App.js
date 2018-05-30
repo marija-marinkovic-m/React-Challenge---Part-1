@@ -103,13 +103,14 @@ class App extends Component {
             <CheckboxInput
               label={translate(lang, 'display.month')}
               checked={displayMonth}
+              disabled={displayYear}
               onChange={this.toggleDisplayField.bind(null,'displayMonth')}
             />
-            <CheckboxInput
+            { displayMonth && <CheckboxInput
               label={translate(lang, 'display.year')}
               checked={displayYear}
               onChange={this.toggleDisplayField.bind(null,'displayYear')}
-            />
+            /> }
           </div>
 
         </Settings>

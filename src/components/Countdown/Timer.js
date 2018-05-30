@@ -44,7 +44,7 @@ class Timer extends React.PureComponent {
   }
 
   handleCountdown = () => {
-    this.setState({ timeDiff: getTimeDiff((new Date()), this.props.dateReference) });
+    this.setState({ timeDiff: getTimeDiff((new Date()), this.props.dateReference, this.props.month, this.props.year) });
   }
 
   getUnitProps = () => {
