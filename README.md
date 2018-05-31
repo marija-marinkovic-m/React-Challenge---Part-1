@@ -13,6 +13,6 @@ Months and years are also available and ready to show up on user's input. Also, 
 
 ### Other libraries
 As you can see, I avoid using additional modules/libraries, if I don't have to. 
-Besides almighty [`styled-components`](https://www.styled-components.com target='_blank'), I've also used this lovely [`react-datetime-picker`](https://www.npmjs.com/package/react-datetime-picker target="_blank") library to make my life easier,... in terms of datetime-picking.
+Besides almighty [`styled-components`](https://www.styled-components.com), I've also used this lovely [`react-datetime-picker`](https://www.npmjs.com/package/react-datetime-picker) library to make my life easier,... in terms of datetime-picking.
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
